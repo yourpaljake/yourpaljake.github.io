@@ -3,18 +3,23 @@
 </head>
 
 <body>
-  <button style="text-align:right;" onclick="changeTheme();">
-    light
-  </button>
-  <h>Header moment</h>
-  <p>Bottom Text</p>
+  <div class="toggles">
+    <button style="text-align:right;" onclick="changeTheme();">
+      light
+    </button>
+  </div>
+  <div class="main">
+    <h1>Header moment</h1>
+    <p>Bottom Text</p>
+  </div>
   
 </body>
 
 <script>
   let currentTheme = 0;
-  var all = document.getElementsByTagName("*");
+  
   function changeTheme() {
+    var all = document.getElementsByTagName("*");
     if (currentTheme % 2 == 0) {
       document.body.style.background = "#353535";
       for (var i=0, max = all.length; i < max; i++) {
