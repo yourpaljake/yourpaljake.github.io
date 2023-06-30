@@ -26,6 +26,7 @@
       var initialMouseY = 0;
       var initialCircleX = 0;
       var initialCircleY = 0;
+      var circlePosAdj = 50;
 
       // Event listener for mouse down
       circle.addEventListener('mousedown', handleStart);
@@ -79,10 +80,10 @@
         var viewportHeight = window.innerHeight;
         var maxCircleX = viewportWidth - circle.offsetWidth;
         var maxCircleY = viewportHeight - circle.offsetHeight;
-        newCircleX = Math.max(0, Math.min(newCircleX, maxCircleX));
+        newCircleX = Math.max(0, Math.min(newCircleX, maxCircleX) - circlePosAdj);
         newCircleY = Math.max(0, Math.min(newCircleY, maxCircleY));
 
-        newCircleY = Math.min(newCircleY, 500);
+        newCircleY = Math.min(newCircleY - circlePosAdj, 500);
         
         circle.style.left = newCircleX + 'px';
         circle.style.top = newCircleY + 'px';
