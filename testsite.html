@@ -27,19 +27,19 @@
       var initialCircleY = 0;
 
       // Event listener for mouse and touch down
-      circle.addEventListener('mousedown', circleStart);
-      circle.addEventListener('touchstart', circleStart);
+      circle.addEventListener('mousedown', handleStart);
+      circle.addEventListener('touchstart', handleStart);
 
-      function circleStart(event) {
+      function handleStart(event) {
         event.preventDefault();
 
         //Determines if user is using mouse or touchscreen
-        if (event.type == 'mousedown') {
-	  isMouseDown = true;
+        if (event.type === 'mousedown') {
+          isMouseDown = true;
           initialMouseX = event.clientX;
           initialMouseY = event.clientY;
-        } else if (event.type == 'touchstart') {
-	  isMouseDown = true;
+        } else if (event.type === 'touchstart') {
+          isMouseDown = true;
           initialMouseX = event.touches[0].clientX;
           initialMouseY = event.touches[0].clientY;
         } 
@@ -49,23 +49,23 @@
         initialCircleY = circle.offsetTop;
 
         //Add listeners for move and stop
-        document.addEventListener('mousemove', circleMove);
-        document.addEventListener('touchmove', circleMove);
-        document.addEventListener('mouseup', circleStop);
-        document.addEventListener('touchend', circleStop);
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('touchmove', handleMove);
+        document.addEventListener('mouseup', handleEnd);
+        document.addEventListener('touchend', handleEnd);
       }
 
-      function circleMove(event) {
+      function handleMove(event) {
         event.preventDefualt();
         
         var currentMouseX;
         var currentMouseY;
 
         //Accomidate different input types
-        if (event.type == 'mousemove') {
+        if (event.type === 'mousemove') {
           currentMouseX = event.clientX;
           currentMouseY = event.clientY;
-        } else if (event.type == 'touchmove') {
+        } else if (event.type === 'touchmove') {
           currentMouseX = event.touches[0].clientX;
           currentMouseY = event.touches[0].clientY;
         }
@@ -92,7 +92,7 @@
         circle.style.top = newCircleY + 'px';
     }
 
-    function circleStop() {
+    function handleStop() {
       isMouseDown = false;
 
       //Remove listeners for move and stop
