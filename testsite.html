@@ -81,8 +81,11 @@
         newCircleX = Math.max(0, Math.min(newCircleX, maxCircleX));
         newCircleY = Math.max(0, Math.min(newCircleY, maxCircleY));
 
+        newCircleY = Math.min(newCircleY, 500);
+        
         circle.style.left = newCircleX + 'px';
         circle.style.top = newCircleY + 'px';
+        document.getElementById("pos").innerHTML = "Position: " + newCircleX + "," + newCircleY;
       }
 
       function handleEnd() {
@@ -95,5 +98,7 @@
         document.removeEventListener('touchend', handleEnd);
       }
     </script>
+    <br>
+    <p id="pos">Position: 0,0</p>
   </body>
 </html>
