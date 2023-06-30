@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Move Circle with Mouse Drag</title>
+    <style>
+      #circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: red;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="circle"></div>
+
+    <script>
+      // Get the circle element
+      var circle = document.getElementById('circle');
+
+      // Initialize variables
+      var isMouseDown = false;
+      var initialMouseX = 0;
+      var initialMouseY = 0;
+      var initialCircleX = 0;
+      var initialCircleY = 0;
+
+      // Event listener for mouse down
+      circle.addEventListener('mousedown', function (event) {
+        isMouseDown = true;
+        initialMouseX = event.clientX;
+        initialMouseY = event.clientY;
+        initialCircleX = circle.offsetLeft;
+        initialCircleY = circle.offsetTop;
+      });
+
+      // Event listener for mouse up
+      document.addEventListener('mouseup', function () {
+        isMouseDown = false;
+      });
+
+      // Event listener for mouse move
+      document.addEventListener('mousemove', function (event) {
+        if (isMouseDown) {
+          var currentMouseX = event.clientX;
+          var currentMouseY = event.clientY;
+          var deltaX = currentMouseX - initialMouseX;
+          var deltaY = currentMouseY - initialMouseY;
+          circle.style.left = initialCircleX + deltaX + 'px';
+          circle.style.top = initialCircleY + deltaY + 'px';
+        }
+      });
+    </script>
+  </body>
+</html>
