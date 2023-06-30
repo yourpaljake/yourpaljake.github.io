@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Move Circle with Mouse Drag (Restricted)</title>
+    <title>Test Circle Mover</title>
     <style>
       #circle {
         width: 100px;
@@ -53,7 +53,7 @@
           var newCircleY = initialCircleY + deltaY;
 
           // Restrict the circle's movement not to go below 500 pixels
-          newCircleY = Math.max(newCircleY, 500);
+          newCircleY = Math.min(newCircleY, 500);
 
           // Update the circle's position
           circle.style.left = newCircleX + 'px';
