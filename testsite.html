@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Move Circle with Mouse Drag (Touchscreen Support)</title>
+    <title>Test Circle Mover</title>
     <style>
       #circle {
         width: 100px;
@@ -26,74 +26,77 @@
       var initialCircleX = 0;
       var initialCircleY = 0;
 
-      // Event listener for mouse down
-      circle.addEventListener('mousedown', handleStart);
-      // Event listener for touch start
-      circle.addEventListener('touchstart', handleStart);
+      // Event listener for mouse and touch down
+      circle.addEventListener('mousedown', circleStart);
+      circle.addEventListener('touchstart', circleStart);
 
-      function handleStart(event) {
+      function circleStart(event) {
         event.preventDefault();
+        isMouseDown = true;
 
-        if (event.type === 'mousedown') {
-          isMouseDown = true;
+        // Determines if user is using mouse or touchscreen
+        if (event.type == 'mousedown') {
           initialMouseX = event.clientX;
           initialMouseY = event.clientY;
-        } else if (event.type === 'touchstart') {
-          isMouseDown = true;
+        } else if (event.type == 'touchstart') {
           initialMouseX = event.touches[0].clientX;
           initialMouseY = event.touches[0].clientY;
+        } else {
+          isMouseDown = false;
         }
 
+        // Add offset for circle position calculations
         initialCircleX = circle.offsetLeft;
         initialCircleY = circle.offsetTop;
 
-        // Event listeners for move and end events
-        document.addEventListener('mousemove', handleMove);
-        document.addEventListener('touchmove', handleMove);
-        document.addEventListener('mouseup', handleEnd);
-        document.addEventListener('touchend', handleEnd);
+        // Add listeners for move and stop
+        document.addEventListener('mousemove', circleMove);
+        document.addEventListener('touchmove', circleMove);
+        document.addEventListener('mouseup', circleStop);
+        document.addEventListener('touchend', circleStop);
       }
 
-      function handleMove(event) {
+      function circleMove(event) {
         event.preventDefault();
 
-        var currentMouseX;
-        var currentMouseY;
+        if (isMouseDown) {
+          var currentMouseX;
+          var currentMouseY;
 
-        if (event.type === 'mousemove') {
-          currentMouseX = event.clientX;
-          currentMouseY = event.clientY;
-        } else if (event.type === 'touchmove') {
-          currentMouseX = event.touches[0].clientX;
-          currentMouseY = event.touches[0].clientY;
+          // Accommodate different input types
+          if (event.type == 'mousemove') {
+            currentMouseX = event.clientX;
+            currentMouseY = event.clientY;
+          } else if (event.type == 'touchmove') {
+            currentMouseX = event.touches[0].clientX;
+            currentMouseY = event.touches[0].clientY;
+          }
+
+          // Calculate position delta
+          var deltaX = currentMouseX - initialMouseX;
+          var deltaY = currentMouseY - initialMouseY;
+
+          // Calculate the new circle position
+          var newCircleX = initialCircleX + deltaX;
+          var newCircleY = initialCircleY + deltaY;
+
+          // Restrict the circle's movement not to go below 500 pixels or off screen
+          var viewportWidth = window.innerWidth;
+          var viewportHeight = window.innerHeight;
+          var maxCircleX = viewportWidth - circle.offsetWidth;
+          var maxCircleY = viewportHeight - circle.offsetHeight;
+          newCircleX = Math.max(0, Math.min(newCircleX, maxCircleX));
+          newCircleY = Math.max(0, Math.min(newCircleY, maxCircleY));
+          newCircleY = Math.min(newCircleY, 500);
+
+          // Update the circle's position
+          circle.style.left = newCircleX + 'px';
+          circle.style.top = newCircleY + 'px';
         }
-
-        var deltaX = currentMouseX - initialMouseX;
-        var deltaY = currentMouseY - initialMouseY;
-
-        var newCircleX = initialCircleX + deltaX;
-        var newCircleY = initialCircleY + deltaY;
-
-        var viewportWidth = window.innerWidth;
-        var viewportHeight = window.innerHeight;
-        var maxCircleX = viewportWidth - circle.offsetWidth;
-        var maxCircleY = viewportHeight - circle.offsetHeight;
-        newCircleX = Math.max(0, Math.min(newCircleX, maxCircleX));
-        newCircleY = Math.max(0, Math.min(newCircleY, maxCircleY));
-
-        circle.style.left = newCircleX + 'px';
-        circle.style.top = newCircleY + 'px';
       }
 
-      function handleEnd() {
+      function circleStop() {
         isMouseDown = false;
 
-        // Remove event listeners for move and end events
-        document.removeEventListener('mousemove', handleMove);
-        document.removeEventListener('touchmove', handleMove);
-        document.removeEventListener('mouseup', handleEnd);
-        document.removeEventListener('touchend', handleEnd);
-      }
-    </script>
-  </body>
-</html>
+        // Remove listeners for move and stop
+        document.removeEventListener('mousemove', circleMove);
