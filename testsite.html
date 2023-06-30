@@ -26,25 +26,53 @@
       var initialCircleX = 0;
       var initialCircleY = 0;
 
-      // Event listener for mouse down
-      circle.addEventListener('mousedown', function (event) {
+      // Event listener for mouse and touch down
+      circle.addEventListener('mousedown', circleStart);
+      circle.addEventListener('touchstart', circleStart);
+
+      function circleStart(event) {
+        event.preventDefault();
         isMouseDown = true;
-        initialMouseX = event.clientX;
-        initialMouseY = event.clientY;
+
+        //Determines if user is using mouse or touchscreen
+        if (event.type == 'mousedown') {
+          initialMouseX = event.clientX;
+          initialMouseY = event.clientY;
+        } else if (event.type == 'touchstart') {
+          initialMouseX = event.touches[0].clientX;
+          initialMouseY = event.touches[0].clientY;
+        } else {
+          isMouseDown = false;
+        }
+
+        //add offset for circle position calculations
         initialCircleX = circle.offsetLeft;
         initialCircleY = circle.offsetTop;
-      });
 
-      // Event listener for mouse up
-      document.addEventListener('mouseup', function () {
-        isMouseDown = false;
-      });
+        //Add listeners for move and stop
+        document.addEventListener('mousemove', circleMove);
+        document.addEventListener('touchmove', circleMove);
+        document.addEventListener('mouseup', circleStop);
+        document.addEventListener('touchend', circleStop);
+      }
 
-      // Event listener for mouse move
-      document.addEventListener('mousemove', function (event) {
+      function circleMove(event) {
+        event.preventDefualt();
+        
         if (isMouseDown) {
-          var currentMouseX = event.clientX;
-          var currentMouseY = event.clientY;
+          var currentMouseX;
+          var currentMouseY;
+
+          //Accomidate different input types
+          if (event.type == 'mousemove') {
+            currentMouseX = event.clientX;
+            currentMouseY = event.clientY;
+          } else if (event.type == 'touchmove') {
+            currentMouseX = event.touches[0].clientX;
+            currentMouseY = event.touches[0].clientY;
+          }
+
+          //Calculate position delta
           var deltaX = currentMouseX - initialMouseX;
           var deltaY = currentMouseY - initialMouseY;
           
@@ -65,7 +93,17 @@
           circle.style.left = newCircleX + 'px';
           circle.style.top = newCircleY + 'px';
         }
-      });
+      }
+
+      function circleStop() {
+        isMouseDown = false;
+
+        //Remove listeners for move and stop
+        document.removeEventListener('mousemove', circleMove);
+        document.removeEventListener('touchmove', circleMove);
+        document.removeEventListener('mouseup', circleStop);
+        document.removeEventListener('touchend', circleStop);
+      }
     </script>
   </body>
 </html>
