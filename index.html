@@ -12,13 +12,22 @@
 
 <script>
   let currentTheme = 0;
+  var all = document.getElementsByTagName("*");
   function changeTheme() {
     if (currentTheme % 2 == 0) {
-      document.body.style.background = "#0A0A0A";
+      document.body.style.background = "#121212";
+      for (var i=0, max = all.length; i < max; i++) {
+        all[i].style.color = "white";
+      }
+      
       document.querySelector("button").childNodes[0].textContent = "dark";
     }
     else {
-      document.body.style.background = "#000000";
+      document.body.style.background = "#FFFFFF";
+      for (var i=0, max = all.length; i < max; i++) {
+        all[i].style.color = "black";
+      }
+      
       document.querySelector("button").childNodes[0].textContent = "light";
     }
     currentTheme += 1;
