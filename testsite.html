@@ -52,7 +52,13 @@
           var newCircleX = initialCircleX + deltaX;
           var newCircleY = initialCircleY + deltaY;
 
-          // Restrict the circle's movement not to go below 500 pixels
+          // Restrict the circle's movement not to go below 500 pixels or off screen
+          var viewportWidth = window.innerWidth;
+          var viewportHeight = window.innerHeight;
+          var maxCircleX = viewportWidth - circle.offsetWidth;
+          var maxCircleY = viewportHeight - circle.offsetHeight;
+          newCircleX = Math.max(0, Math.min(newCircleX, maxCircleX));
+          newCircleY = Math.max(0, Math.min(newCircleY, maxCircleY));
           newCircleY = Math.min(newCircleY, 500);
 
           // Update the circle's position
