@@ -4,8 +4,8 @@
     <title>Test Circle Mover</title>
     <style>
       #circle {
-        width: 100px;
-        height: 100px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         background-color: red;
         position: absolute;
@@ -28,14 +28,14 @@
       var initialCircleY = 0;
       var circlePosAdj = 50;
 
-      // Event listener for mouse down
+      // Event listener for mouse down and touch start
       circle.addEventListener('mousedown', handleStart);
-      // Event listener for touch start
       circle.addEventListener('touchstart', handleStart);
 
       function handleStart(event) {
         event.preventDefault();
 
+        //get current position
         if (event.type === 'mousedown') {
           isMouseDown = true;
           initialMouseX = event.clientX;
@@ -81,7 +81,7 @@
         var maxCircleX = viewportWidth - circle.offsetWidth;
         var maxCircleY = viewportHeight - circle.offsetHeight;
         newCircleX = Math.max(0, Math.min(newCircleX, maxCircleX));
-        newCircleY = Math.max(0, Math.min(newCircleY, maxCircleY));
+        newCircleY = Math.max(50, Math.min(newCircleY, maxCircleY));
 
         newCircleY = Math.min(newCircleY, 550);
         
