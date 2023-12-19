@@ -30,12 +30,10 @@
       background-color: rgba(255, 255, 255, 0.7);
       border-radius: 5px;
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      top: 0;
+      left: 0;
       user-select: none; /* Disable text selection */
-      transform-origin: center center;
-      transform: scale(1); /* Initial scale */
+      transform-origin: top left;
     }
   </style>
 </head>
@@ -104,16 +102,19 @@
           circle.style.left = newCircleX + 'px';
           circle.style.top = newCircleY + 'px';
 
-          // Scale the position label
-          var magnitude = Math.sqrt(Math.pow(newCircleX - window.innerWidth / 2, 2) +
-                                    Math.pow(newCircleY - window.innerHeight / 2, 2));
+          // Calculate position in cartesian coordinates
+          var cartesianX = newCircleX - window.innerWidth / 2;
+          var cartesianY = window.innerHeight / 2 - newCircleY;
 
-          var scaledMagnitude = Math.min(magnitude / maxRadius, 1) * 10;
-          var angle = Math.atan2(newCircleY - window.innerHeight / 2, newCircleX - window.innerWidth / 2);
+          // Calculate angle in radians
+          var angle = Math.atan2(cartesianY, cartesianX);
 
-          posDisplay.textContent = "Position: " + scaledMagnitude.toFixed(2) +
-                                    " (θ: " + (angle * (180 / Math.PI)).toFixed(2) + "°)";
-          posDisplay.style.transform = "scale(" + scaledMagnitude + ")";
+          // Convert angle to degrees
+          var angleDegrees = (angle * 180 / Math.PI).toFixed(2);
+
+          // Update position label
+          posDisplay.textContent = "Position: " + cartesianX.toFixed(2) + "," + cartesianY.toFixed(2) +
+                                    " (θ: " + angleDegrees + "°)";
         }
       }
 
