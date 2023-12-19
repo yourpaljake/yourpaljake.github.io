@@ -30,9 +30,12 @@
       background-color: rgba(255, 255, 255, 0.7);
       border-radius: 5px;
       position: fixed;
-      top: 0;
-      left: 0;
-      user-select: none; 
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      user-select: none; /* Disable text selection */
+      transform-origin: center center;
+      transform: scale(1); /* Initial scale */
     }
   </style>
 </head>
@@ -47,6 +50,7 @@
 
       var isMouseDown = false;
       var initialMouseX, initialMouseY, initialCircleX, initialCircleY;
+      var circleRadius = 0.1; // 10% of the screen size
 
       circle.addEventListener('mousedown', handleStart);
       circle.addEventListener('touchstart', handleStart);
@@ -79,22 +83,38 @@
         var deltaX = currentMouseX - initialMouseX;
         var deltaY = currentMouseY - initialMouseY;
 
-        var newCircleX = initialCircleX + deltaX;
-        var newCircleY = initialCircleY + deltaY;
+        var distanceFromCenter = Math.sqrt(Math.pow(initialCircleX + deltaX - window.innerWidth / 2, 2) +
+                                           Math.pow(initialCircleY + deltaY - window.innerHeight / 2, 2));
 
-        var viewportWidth = window.innerWidth;
-        var viewportHeight = window.innerHeight;
+        var maxRadius = Math.min(window.innerWidth, window.innerHeight) * circleRadius;
 
-        var maxCircleX = viewportWidth - circle.offsetWidth;
-        var maxCircleY = viewportHeight - circle.offsetHeight;
+        if (distanceFromCenter <= maxRadius) {
+          var newCircleX = initialCircleX + deltaX;
+          var newCircleY = initialCircleY + deltaY;
 
-        newCircleX = Math.max(0, Math.min(newCircleX, maxCircleX));
-        newCircleY = Math.max(0, Math.min(newCircleY, maxCircleY));
+          var viewportWidth = window.innerWidth;
+          var viewportHeight = window.innerHeight;
 
-        circle.style.left = newCircleX + 'px';
-        circle.style.top = newCircleY + 'px';
+          var maxCircleX = viewportWidth - circle.offsetWidth;
+          var maxCircleY = viewportHeight - circle.offsetHeight;
 
-        posDisplay.textContent = "Position: " + newCircleX + "," + newCircleY;
+          newCircleX = Math.max(0, Math.min(newCircleX, maxCircleX));
+          newCircleY = Math.max(0, Math.min(newCircleY, maxCircleY));
+
+          circle.style.left = newCircleX + 'px';
+          circle.style.top = newCircleY + 'px';
+
+          // Scale the position label
+          var magnitude = Math.sqrt(Math.pow(newCircleX - window.innerWidth / 2, 2) +
+                                    Math.pow(newCircleY - window.innerHeight / 2, 2));
+
+          var scaledMagnitude = Math.min(magnitude / maxRadius, 1) * 10;
+          var angle = Math.atan2(newCircleY - window.innerHeight / 2, newCircleX - window.innerWidth / 2);
+
+          posDisplay.textContent = "Position: " + scaledMagnitude.toFixed(2) +
+                                    " (θ: " + (angle * (180 / Math.PI)).toFixed(2) + "°)";
+          posDisplay.style.transform = "scale(" + scaledMagnitude + ")";
+        }
       }
 
       function handleEnd() {
