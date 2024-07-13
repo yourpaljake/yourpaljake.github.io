@@ -1,0 +1,18 @@
+Home:
+- pinned projects
+- brief about me
+
+About:
+- describe myself
+- education, hobbies, study abroads (pictures)
+
+Projects:
+- create list of all projects with list in timeline order
+- each item describes the project, lists the motivation, and what I learned
+
+Overall:
+- Add drop down list for projects with most recent
+- Add animations
+- Add an education section
+  1) math tutorials
+  2) coding walkthroughs
