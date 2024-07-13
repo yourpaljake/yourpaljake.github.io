@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>yourpaljake website</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .toggles {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="toggles">
+      <h1>Header moment</h1>
+      <p style="text-align: right;">
+        <button onclick="changeTheme();">
+          light
+        </button>
+      </p>
+    </div>
+  
+    <div class="main">
+      <p>Bottom Text</p>
+      <h2>Related Sites</h2>
+      <a href="https://yourpaljake.github.io/testsite.html">Funny Page</a>
+      <a href="https://yourpaljake.github.io/autoclicker.html">Funny Page2</a>
+      <h2>Peer Reviews</h2>
+      <a href="https://yourpaljake.github.io/PeerReviews/IshaanKartikSingh.html">Ishaan Kartik Singh</a>
+      <a href="https://yourpaljake.github.io/PeerReviews/MadelineZofiaKwasniewski.html">Madeline Zofia Kwasniewski</a>
+    </div>
+  
+    <noscript>Sorry, your browser does not support Javascript!</noscript>
+
+    <script>
+      let currentTheme = 0;
+  
+      function changeTheme() {
+        var all = document.getElementsByTagName("*");
+        if (currentTheme % 2 == 0) {
+          document.body.style.background = "#353535";
+          for (var i = 0, max = all.length; i < max; i++) {
+            all[i].style.color = "white";
+          }
+      
+          document.querySelector("button").childNodes[0].textContent = "dark";
+        } else {
+          document.body.style.background = "#FFFFFF";
+          for (var i = 0, max = all.length; i < max; i++) {
+            all[i].style.color = "black";
+          }
+      
+          document.querySelector("button").childNodes[0].textContent = "light";
+        }
+        document.querySelector('button').style.color = "black";
+        currentTheme += 1;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+/* css/styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background: #0b1013;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+.logo {
+    width: 50px;
+    height: auto;
+}
+
+/* center tagline inline with logo */
+
+.logo, .tagline {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    padding: 1rem;
+}
+
+footer {
+    background: #0b1013;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    position: relative
+    bottom: 0;
+    width: 100%;
+}
