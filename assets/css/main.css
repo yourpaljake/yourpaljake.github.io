@@ -1,4 +1,20 @@
-/* css/styles.css */
+html, body {
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 100%; /* Ensure container elements do not exceed the viewport width */
+    overflow: hidden; /* Hide any overflow content */
+}
+
+img {
+    max-width: 100%; /* Ensure images do not exceed their container width */
+    height: auto; /* Maintain aspect ratio */
+}
+
 
 body {
     font-family: Arial, sans-serif;
