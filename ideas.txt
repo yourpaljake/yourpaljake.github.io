@@ -16,3 +16,7 @@ Overall:
 - Add an education section
   1) math tutorials
   2) coding walkthroughs
+
+Transition ideas:
+- scroll right to left
+- swipe up from bottom (leave header)
